@@ -33,6 +33,7 @@ export class Astar {
         this.openList.push(this.start);
 
         while (this.openList.length > 0) {
+            // clear previous path:
             // for (let cell of this.path) {
             //     cell.type = 'air';
             // }
@@ -77,7 +78,8 @@ export class Astar {
             for (let cell of this.path) {
                 cell.type = 'visiting';
             }
-            await this.sleep(0);
+
+            await this.sleep(1);
         }
 
         throw new Error('No path found!');

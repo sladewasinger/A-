@@ -6,13 +6,11 @@ grid.initialize();
 setInterval(() => grid.draw(), 1000 / 20);
 
 window.addEventListener('click', (e) => {
-    // get canvas position
     const canvas = document.getElementsByTagName('canvas')[0];
     const rect = canvas.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
 
-    // get cell position
     const cellX = Math.floor(x / grid.cellWidth);
     const cellY = Math.floor(y / grid.cellWidth);
 
@@ -30,13 +28,15 @@ let aStar = new Astar(grid, grid.getCell(1, 1), grid.getCell(62, 62));
 grid.getCell(1, 1).type = 'start';
 grid.getCell(62, 62).type = 'end';
 
-await aStar.A_Star();
-for (let cell of aStar.path) {
+const path = await aStar.A_Star();
+
+for (let cell of path) {
     cell.type = 'visited';
 }
 
-grid.drawPath(aStar.path);
+grid.draw(path);
 
+// reset start and end since they get overwritten by the path
 grid.getCell(1, 1).type = 'start';
 grid.getCell(62, 62).type = 'end';
 

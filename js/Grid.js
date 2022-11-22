@@ -59,11 +59,9 @@ export class Grid {
         return this.cells.find(cell => cell.x == x && cell.y == y);
     }
 
-    drawPath(path) {
-        this.path = path;
-    }
+    draw(path) {
+        this.path = this.path || path;
 
-    draw() {
         if (!this.app || !this.graphics) {
             this.initializeDraw();
         }
@@ -101,7 +99,6 @@ export class Grid {
             this.graphics.endFill();
 
             if (this.path) {
-                // draw line from cell to cell
                 for (const cell of this.path) {
                     const previous = cell.previous;
                     if (previous) {
