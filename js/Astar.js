@@ -3,8 +3,8 @@ export class Astar {
         this.grid = grid;
         this.start = start;
         this.end = end;
-        this.openList = [];
-        this.closedList = [];
+        this.openList = {};
+        this.closedList = {};
         this.path = [];
         this.current = null;
     }
@@ -40,25 +40,21 @@ export class Astar {
         this.start.f = this.heuristic(this.start, this.end);
         this.start.g = 0;
         this.start.f = this.start.g + this.start.h;
-        this.openList.push(this.start);
+        this.openList[this.start.id] = this.start;
 
-        while (this.openList.length > 0) {
-            // clear previous path:
-            // for (let cell of this.path) {
-            //     cell.type = 'air';
-            // }
-
-            let current = this.openList[0];
-            for (let i = 0; i < this.openList.length; i++) {
-                if (this.openList[i].f < current.f) {
-                    current = this.openList[i];
+        while (Object.keys(this.openList).length > 0) {
+            let current = null;
+            const keys = Object.keys(this.openList);
+            for (let key of keys) {
+                if (!current || this.openList[key].f < current.f) {
+                    current = this.openList[key];
                 }
             }
-            this.openList = this.openList.filter(cell => cell !== current);
-            this.closedList.push(current);
+
+            delete this.openList[current.id];
+            this.closedList[current.id] = current;
 
             if (current === this.end) {
-                console.log('Found the end!');
                 this.path = this.backtrack(current);
                 return this.path;
             }
@@ -66,18 +62,18 @@ export class Astar {
             for (const neighbor of this.getNeighbors(current)) {
                 let betterPath = false;
 
-                if (this.closedList.includes(neighbor)) {
+                if (this.closedList[neighbor.id]) {
                     continue;
                 }
                 let tempG = current.g + this.distance(current, neighbor);
-                if (this.openList.includes(neighbor)) {
+                if (this.openList[neighbor.id]) {
                     if (tempG < neighbor.g) {
                         neighbor.g = tempG;
                         betterPath = true;
                     }
                 } else {
                     neighbor.g = tempG;
-                    this.openList.push(neighbor);
+                    this.openList[neighbor.id] = neighbor;
                     betterPath = true;
                 }
 
@@ -87,14 +83,7 @@ export class Astar {
                     neighbor.previous = current;
                 }
             }
-            this.closedList.push(current);
-
-            // this.path = this.backtrack(current);
-            // for (let cell of this.path) {
-            //     cell.type = 'visiting';
-            // }
-
-            //await this.sleep(1);
+            this.closedList[current.id] = current;
         }
 
         throw new Error('No path found!');

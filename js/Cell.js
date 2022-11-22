@@ -6,5 +6,6 @@ export class Cell {
         this.g = Infinity;
         this.f = Infinity;
         this.type = type;
+        this.id = `${x},${y}`;
     }
 }
