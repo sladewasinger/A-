@@ -9,6 +9,9 @@ export class Grid {
     }
 
     initialize() {
+        this.cells = [];
+        this.path = null;
+
         for (let x = 0; x < this.width; x++) {
             for (let y = 0; y < this.height; y++) {
                 let type = 'air';
@@ -17,9 +20,9 @@ export class Grid {
                     type = 'wall';
                 }
 
-                if (Math.random() < 0.1) {
-                    type = 'wall';
-                }
+                // if (Math.random() < 0.1) {
+                //     type = 'wall';
+                // }
 
                 this.addCell(new Cell(x, y, type));
             }
@@ -103,16 +106,17 @@ export class Grid {
             this.graphics.drawRect(cell.x * this.cellWidth, cell.y * this.cellWidth, this.cellWidth, this.cellWidth);
             this.graphics.endFill();
 
-            if (this.path) {
-                for (const cell of this.path) {
-                    const previous = cell.previous;
-                    if (previous) {
-                        this.graphics.lineStyle(1, 0x00ff00, 1);
-                        this.graphics.moveTo(cell.x * this.cellWidth + this.cellWidth / 2, cell.y * this.cellWidth + this.cellWidth / 2);
-                        this.graphics.lineTo(previous.x * this.cellWidth + this.cellWidth / 2, previous.y * this.cellWidth + this.cellWidth / 2);
-                    }
-                }
-            }
+            // if (this.path) {
+            //     this.graphics.lineStyle(1, 0x00ff00, 1);
+
+            //     for (const cell of this.path) {
+            //         const previous = cell.previous;
+            //         if (previous) {
+            //             this.graphics.moveTo(cell.x * this.cellWidth + this.cellWidth / 2, cell.y * this.cellWidth + this.cellWidth / 2);
+            //             this.graphics.lineTo(previous.x * this.cellWidth + this.cellWidth / 2, previous.y * this.cellWidth + this.cellWidth / 2);
+            //         }
+            //     }
+            // }
         }
     }
 
@@ -128,7 +132,6 @@ export class Grid {
 
             document.getElementById('container').appendChild(this.app.view);
         }
-
 
         if (!this.graphics) {
             this.graphics = new PIXI.Graphics();

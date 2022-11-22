@@ -9,6 +9,16 @@ export class Astar {
         this.current = null;
     }
 
+    setStart(x, y) {
+        this.start = this.grid.getCell(x, y);
+        this.grid.getCell(x, y).type = 'start';
+    }
+
+    setEnd(x, y) {
+        this.end = this.grid.getCell(x, y);
+        this.grid.getCell(x, y).type = 'end';
+    }
+
     sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
@@ -38,9 +48,14 @@ export class Astar {
             //     cell.type = 'air';
             // }
 
-            this.openList.sort((a, b) => a.f - b.f); // First node in the list is the one with the lowest f value
-            const current = this.openList.shift(); // Remove lowest f value from openList
-            this.closedList.push(current); // Add current to closedList
+            let current = this.openList[0];
+            for (let i = 0; i < this.openList.length; i++) {
+                if (this.openList[i].f < current.f) {
+                    current = this.openList[i];
+                }
+            }
+            this.openList = this.openList.filter(cell => cell !== current);
+            this.closedList.push(current);
 
             if (current === this.end) {
                 console.log('Found the end!');
@@ -74,12 +89,12 @@ export class Astar {
             }
             this.closedList.push(current);
 
-            this.path = this.backtrack(current);
-            for (let cell of this.path) {
-                cell.type = 'visiting';
-            }
+            // this.path = this.backtrack(current);
+            // for (let cell of this.path) {
+            //     cell.type = 'visiting';
+            // }
 
-            await this.sleep(1);
+            //await this.sleep(1);
         }
 
         throw new Error('No path found!');
