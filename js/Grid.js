@@ -38,7 +38,6 @@ export class Grid {
             this.getCell(20, y).type = 'wall';
         }
 
-
         for (let x = 30; x < 50; x++) {
             for (let y = 10; y < 20; y++) {
                 this.getCell(x, y).type = 'wall';
@@ -57,7 +56,12 @@ export class Grid {
     }
 
     getCell(x, y) {
-        return this.cells.find(cell => cell.x == x && cell.y == y);
+        // find cell
+        if (x < 0 || x >= this.width || y < 0 || y >= this.height) {
+            return null;
+        }
+
+        return this.cells[y + x * this.width];
     }
 
     draw(path) {
