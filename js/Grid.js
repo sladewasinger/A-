@@ -17,15 +17,14 @@ export class Grid {
                     type = 'wall';
                 }
 
-                // if (Math.random() < 0.1) {
-                //     type = 'wall';
-                // }
+                if (Math.random() < 0.1) {
+                    type = 'wall';
+                }
 
                 this.addCell(new Cell(x, y, type));
             }
         }
 
-        // make 4 boxes
         for (let x = 7; x < 20; x++) {
             for (let y = 10; y < 20; y++) {
                 this.getCell(x, y).type = 'wall';
