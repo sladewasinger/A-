@@ -17,9 +17,9 @@ export class Grid {
                     type = 'wall';
                 }
 
-                if (Math.random() < 0.1) {
-                    type = 'wall';
-                }
+                // if (Math.random() < 0.1) {
+                //     type = 'wall';
+                // }
 
                 this.addCell(new Cell(x, y, type));
             }
@@ -32,11 +32,13 @@ export class Grid {
             }
         }
 
-        for (let x = 10; x < 20; x++) {
-            for (let y = 30; y < 40; y++) {
-                this.getCell(x, y).type = 'wall';
-            }
+        for (let x = 10; x <= 20; x++) {
+            this.getCell(x, 30).type = 'wall';
         }
+        for (let y = 22; y < 35; y++) {
+            this.getCell(20, y).type = 'wall';
+        }
+
 
         for (let x = 30; x < 50; x++) {
             for (let y = 10; y < 20; y++) {
