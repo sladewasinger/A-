@@ -52,6 +52,15 @@ export class Grid {
                 this.getCell(x, y).type = 'wall';
             }
         }
+
+        // draw circle
+        for (let x = 0; x < this.width; x++) {
+            for (let y = 0; y < this.height; y++) {
+                if (Math.sqrt(Math.pow(x - 15, 2) + Math.pow(y - 50, 2)) < 10) {
+                    this.getCell(x, y).type = 'wall';
+                }
+            }
+        }
     }
 
     addCell(cell) {
