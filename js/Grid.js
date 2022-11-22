@@ -1,10 +1,4 @@
-export class Cell {
-    constructor(x, y, type) {
-        this.x = x;
-        this.y = y;
-        this.type = type;
-    }
-}
+import { Cell } from "./Cell.js";
 
 export class Grid {
     constructor(width, height, cellWidth = 10) {

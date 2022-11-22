@@ -3,7 +3,7 @@ import { Grid } from "./js/Grid.js";
 
 let grid = new Grid(64, 64);
 grid.initialize();
-setInterval(() => grid.draw(), 1000 / 60);
+setInterval(() => grid.draw(), 1000 / 20);
 
 window.addEventListener('click', (e) => {
     // get canvas position
