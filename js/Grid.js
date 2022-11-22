@@ -32,10 +32,10 @@ export class Grid {
             }
         }
 
-        for (let x = 10; x <= 20; x++) {
+        for (let x = 13; x <= 20; x++) {
             this.getCell(x, 30).type = 'wall';
         }
-        for (let y = 22; y < 35; y++) {
+        for (let y = 22; y < 40; y++) {
             this.getCell(20, y).type = 'wall';
         }
 
